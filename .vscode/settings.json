@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "array": "cpp",
+        "vector": "cpp",
+        "filesystem": "cpp",
+        "istream": "cpp",
+        "xiosbase": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}
