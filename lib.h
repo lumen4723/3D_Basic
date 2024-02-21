@@ -10,9 +10,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/hash.hpp>
 
-// #define STB_IMAGE_IMPLEMENTATION
-// #include <stb_image.h>
-
 // #define TINYOBJLOADER_IMPLEMENTATION
 // #include <tiny_obj_loader.h>
 
@@ -36,3 +33,5 @@
 using namespace std;
 
 #define DEBUG
+
+#include "Structs.h"
