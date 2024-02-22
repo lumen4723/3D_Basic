@@ -31,38 +31,51 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
     return VK_FALSE;
 }
 
+
 VkResult CreateDebugUtilsMessengerEXT(
     VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo,
     const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pDebugMessenger
 );
+
 void DestroyDebugUtilsMessengerEXT(
     VkInstance instance, VkDebugUtilsMessengerEXT debugMessenger,
     const VkAllocationCallbacks* pAllocator
 );
+
 void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
 
+
 VkShaderModule createShaderModule(const vector<char> &code, VkDevice device);
+
 
 VkSurfaceFormatKHR chooseSwapSurfaceFormat(
     const vector<VkSurfaceFormatKHR> &availableFormats
 );
+
 VkPresentModeKHR chooseSwapPresentMode(
     const vector<VkPresentModeKHR> &availablePresentModes
 );
+
 VkExtent2D chooseSwapExtent(
     const VkSurfaceCapabilitiesKHR &capabilities,
     GLFWwindow* window
 );
+
 SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device, VkSurfaceKHR surface);
+
 
 bool checkDeviceExtensionSupport(
     VkPhysicalDevice device, const vector<const char *> &deviceExtensions
 );
+
 bool isDeviceSuitable(
     VkPhysicalDevice device, VkSurfaceKHR surface,
     const vector<const char *> &deviceExtensions
 );
+
 vector<const char *> getRequiredExtensions(bool enableValidationLayers);
+
 bool checkValidationLayerSupport(const vector<const char*> &validationLayers);
+
 
 QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR surface);

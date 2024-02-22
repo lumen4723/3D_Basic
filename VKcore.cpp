@@ -210,7 +210,6 @@ void VKengine::createImageViews() {
     }
 }
 
-// 코드가 조금 다름
 void VKengine::createRenderPass() {
     VkAttachmentDescription colorAttachment{};
     colorAttachment.format = swapChainImageFormat;

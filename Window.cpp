@@ -5,7 +5,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-Window::Window() {
+Window::Window(uint32_t width, uint32_t height) : WIDTH(width), HEIGHT(height) {
     glfwInit();
 
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -29,12 +29,35 @@ Window::Window() {
 }
 
 void Window::initVulkan() {
-    engine = new VKengine(window, MAX_FRAMES_IN_FLIGHT, rootPath, true);
+    engine = new VKengine(window, MAX_FRAMES_IN_FLIGHT, rootPath);
 }
 
 void Window::mainLoop() {
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
+
+        engine->vertices = {
+            {{-0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
+            {{0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
+            {{0.5f, 0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}},
+            {{-0.5f, 0.5f, 0.0f}, {1.0f, 1.0f, 1.0f}},
+
+            {{0.5f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
+            {{1.5f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
+            {{1.5f, 1.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
+            {{0.5f, 1.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
+
+            {{-1.5f, 0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
+            {{-0.5f, 0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
+            {{-0.5f, 1.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
+            {{-1.5f, 1.5f, 0.0f}, {0.0f, 1.0f, 0.0f}}
+        };
+        engine->indices = {
+            0, 1, 2, 2, 3, 0,
+            4, 5, 6, 6, 7, 4,
+            8, 9, 10, 10, 11, 8
+        };
+        
         engine->drawFrame();
     }
 
@@ -45,7 +68,5 @@ void Window::cleanup() {
     engine->vkCleanup();
 
     glfwDestroyWindow(window);
-
     glfwTerminate();
 }
-

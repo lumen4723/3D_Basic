@@ -5,13 +5,11 @@
 VKengine::VKengine(
     GLFWwindow *window,
     const int MAX_FRAMES_IN_FLIGHT,
-    filesystem::path& rootPath,
-    bool framebufferResized
+    filesystem::path& rootPath
 ) :
     MAX_FRAMES_IN_FLIGHT(MAX_FRAMES_IN_FLIGHT),
     window(window),
-    rootPath(rootPath),
-    framebufferResized(framebufferResized)
+    rootPath(rootPath)
 {
     createInstance();
     setupDebugMessenger();
@@ -35,10 +33,8 @@ VKengine::VKengine(
 }
 
 void VKengine::createBuffer(
-    VkDeviceSize size,
-    VkBufferUsageFlags usage,
-    VkMemoryPropertyFlags properties,
-    VkBuffer &buffer,
+    VkDeviceSize size, VkBufferUsageFlags usage,
+    VkMemoryPropertyFlags properties, VkBuffer &buffer,
     VkDeviceMemory &bufferMemory
 ) {
     VkBufferCreateInfo bufferInfo = {};
@@ -109,6 +105,12 @@ void VKengine::vkCleanup() {
 }
 
 void VKengine::recreateSwapChain() {
+    vkDestroyBuffer(device, indexBuffer, nullptr);
+    vkFreeMemory(device, indexBufferMemory, nullptr);
+
+    vkDestroyBuffer(device, vertexBuffer, nullptr);
+    vkFreeMemory(device, vertexBufferMemory, nullptr);
+
     int width = 0, height = 0;
     glfwGetFramebufferSize(window, &width, &height);
     while (width == 0 || height == 0) {
@@ -123,6 +125,9 @@ void VKengine::recreateSwapChain() {
     createSwapChain();
     createImageViews();
     createFramebuffers();
+
+    createVertexBuffer();
+    createIndexBuffer();
 }
 
 void VKengine::cleanupSwapChain() {
@@ -281,7 +286,7 @@ void VKengine::recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t image
     renderPassInfo.renderArea.offset = {0, 0};
     renderPassInfo.renderArea.extent = swapChainExtent;
 
-    VkClearValue clearColor = {{{0.0f, 0.0f, 0.0f, 1.0f}}};
+    VkClearValue clearColor = {{{0.2f, 0.2f, 0.2f, 1.0f}}}; // 배경색
     renderPassInfo.clearValueCount = 1;
     renderPassInfo.pClearValues = &clearColor;
 
@@ -335,14 +340,16 @@ void VKengine::updateUniformBuffer(uint32_t currentImage) {
         currentTime - startTime
     ).count();
 
-    UniformBufferObject ubo{};
+    UniformBufferObject ubo{}; // 카메라 설정
     ubo.model = glm::rotate(
         glm::mat4(1.0f),
-        time * glm::radians(45.0f),
+        // time * glm::radians(45.0f),
+        glm::radians(0.0f),
         glm::vec3(0.0f, 0.0f, 1.0f)
     );
     ubo.view = glm::lookAt(
-        glm::vec3(2.0f, 2.0f, 2.0f),
+        // glm::vec3(0.0f, -2.0f, 2.0f),
+        glm::vec3(0.0f, -1.e-20f, 4.0f),
         glm::vec3(0.0f, 0.0f, 0.0f),
         glm::vec3(0.0f, 0.0f, 1.0f)
     );

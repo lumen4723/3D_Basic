@@ -3,12 +3,12 @@
 #include "lib.h"
 
 #include "VKengine.h"
-#include "Tools.h"
+#include "VKtools.h"
 
 class Window {
 public:
-    const uint32_t WIDTH = 800;
-    const uint32_t HEIGHT = 600;
+    const uint32_t WIDTH;
+    const uint32_t HEIGHT;
 
     const int MAX_FRAMES_IN_FLIGHT = 2;
 
@@ -21,7 +21,7 @@ public:
     GLFWwindow* window;
     VKengine* engine;
 
-    Window();
+    Window(uint32_t width = 800, uint32_t height = 600);
 
     void initVulkan();
 
@@ -31,6 +31,6 @@ public:
 };
 
 static void framebufferResizeCallback(GLFWwindow* window, int width, int height) {
-    auto app = reinterpret_cast<VKengine*>(glfwGetWindowUserPointer(window));
+    VKengine* app = reinterpret_cast<VKengine*>(glfwGetWindowUserPointer(window));
     app->framebufferResized = true;
 }

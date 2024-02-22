@@ -2,7 +2,7 @@
 
 #include "lib.h"
 
-#include "Tools.h"
+#include "VKtools.h"
 
 class VKengine {
 private:
@@ -70,23 +70,12 @@ private:
 
 public:
     VkDevice device;
-    bool framebufferResized;
+    bool framebufferResized = true;
 
-    vector<Vertex> vertices = {
-        {{-0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
-        {{0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
-        {{0.5f, 0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}},
-        {{-0.5f, 0.5f, 0.0f}, {1.0f, 1.0f, 1.0f}},
-
-        {{0.0f, 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f}},
-        {{1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}},
-        {{1.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 1.0f}},
-        {{0.0f, 1.0f, 0.0f}, {1.0f, 1.0f, 1.0f}}
+    vector<Vertex> vertices = { // 위치, 색깔 초기 값
+        {{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}}
     };
-    vector<uint16_t> indices = {
-        0, 1, 2, 2, 3, 0,
-        4, 5, 6, 6, 7, 4
-    };
+    vector<uint16_t> indices = {0};
 
     void createInstance();
     void setupDebugMessenger();
@@ -111,8 +100,7 @@ public:
     VKengine(
         GLFWwindow* window,
         const int MAX_FRAMES_IN_FLIGHT,
-        filesystem::path& rootPath,
-        bool framebufferResized = false
+        filesystem::path& rootPath
     );
 
     void createBuffer(

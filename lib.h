@@ -32,6 +32,8 @@
 
 using namespace std;
 
+// 디버그 모드를 켜면, 에러들을 콘솔에 출력함
 #define DEBUG
+// #define NDEBUG
 
 #include "Structs.h"
