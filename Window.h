@@ -21,13 +21,15 @@ public:
     GLFWwindow* window;
     VKengine* engine;
 
-    Window(uint32_t width = 800, uint32_t height = 600);
+    Window(uint32_t width = 800, uint32_t height = 600, string title = "3D Basic");
 
     void initVulkan();
 
     void mainLoop();
 
     void cleanup();
+    
+    void makeVertexFrame(vector<Vertex>& vertices, vector<uint16_t>& indices);
 };
 
 static void framebufferResizeCallback(GLFWwindow* window, int width, int height) {

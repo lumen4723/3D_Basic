@@ -75,7 +75,7 @@ public:
     vector<Vertex> vertices = { // 위치, 색깔 초기 값
         {{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}}
     };
-    vector<uint16_t> indices = {0};
+    vector<uint16_t> indices = {0}; // Right-Hand Triangle
 
     void createInstance();
     void setupDebugMessenger();

@@ -348,8 +348,8 @@ void VKengine::updateUniformBuffer(uint32_t currentImage) {
         glm::vec3(0.0f, 0.0f, 1.0f)
     );
     ubo.view = glm::lookAt(
-        // glm::vec3(0.0f, -2.0f, 2.0f),
-        glm::vec3(0.0f, -1.e-20f, 4.0f),
+        glm::vec3(0.0f, -2.0f, 2.0f), // Like 3D
+        // glm::vec3(0.0f, -1.e-20f, 4.0f), // Like 2D
         glm::vec3(0.0f, 0.0f, 0.0f),
         glm::vec3(0.0f, 0.0f, 1.0f)
     );

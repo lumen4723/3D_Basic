@@ -5,24 +5,26 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-Window::Window(uint32_t width, uint32_t height) : WIDTH(width), HEIGHT(height) {
+Window::Window(
+    uint32_t width, uint32_t height, string title
+) : WIDTH(width), HEIGHT(height) {
     glfwInit();
 
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
     
-    window = glfwCreateWindow(WIDTH, HEIGHT, "3D Basic", nullptr, nullptr);
+    window = glfwCreateWindow(WIDTH, HEIGHT, title.c_str(), nullptr, nullptr);
 
-    GLFWimage icons[1];
-    icons[0].width = 16;
-    icons[0].height = 16;
-    icons[0].pixels = stbi_load(
+    GLFWimage Logo[1];
+    Logo[0].width = 16;
+    Logo[0].height = 16;
+    Logo[0].pixels = stbi_load(
         (rootPath / "icon.jpg").string().c_str(),
-        &icons[0].width, &icons[0].height, 0, 4
+        &Logo[0].width, &Logo[0].height, 0, 4
     );
-    if (icons[0].pixels == NULL) {
-        throw runtime_error("Failed to load icon image");
+    if (Logo[0].pixels == NULL) {
+        throw runtime_error("Failed to load Logo image");
     }
-    glfwSetWindowIcon(window, 1, icons);
+    glfwSetWindowIcon(window, 1, Logo);
 
     glfwSetWindowUserPointer(window, this);
     glfwSetFramebufferSizeCallback(window, framebufferResizeCallback);
@@ -33,30 +35,16 @@ void Window::initVulkan() {
 }
 
 void Window::mainLoop() {
+    // TODO: Init Actors And Resources
+
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
 
-        engine->vertices = {
-            {{-0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
-            {{0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
-            {{0.5f, 0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}},
-            {{-0.5f, 0.5f, 0.0f}, {1.0f, 1.0f, 1.0f}},
+        // TODO: Update Actors And Resources
+        
 
-            {{0.5f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
-            {{1.5f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
-            {{1.5f, 1.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
-            {{0.5f, 1.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
-
-            {{-1.5f, 0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
-            {{-0.5f, 0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
-            {{-0.5f, 1.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
-            {{-1.5f, 1.5f, 0.0f}, {0.0f, 1.0f, 0.0f}}
-        };
-        engine->indices = {
-            0, 1, 2, 2, 3, 0,
-            4, 5, 6, 6, 7, 4,
-            8, 9, 10, 10, 11, 8
-        };
+        // TODO: Make Vertex Frame Buffer And Indices From Actors And Resources
+        makeVertexFrame(engine->vertices, engine->indices);
         
         engine->drawFrame();
     }
@@ -69,4 +57,30 @@ void Window::cleanup() {
 
     glfwDestroyWindow(window);
     glfwTerminate();
+}
+
+void Window::makeVertexFrame(
+    vector<Vertex>& vertices, vector<uint16_t>& indices
+) {
+    vertices = {
+        {{-0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
+        {{0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
+        {{0.5f, 0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}},
+        {{-0.5f, 0.5f, 0.0f}, {1.0f, 1.0f, 1.0f}},
+
+        {{0.5f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
+        {{1.5f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
+        {{1.5f, 1.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
+        {{0.5f, 1.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
+
+        {{-1.5f, 0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
+        {{-0.5f, 0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
+        {{-0.5f, 1.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
+        {{-1.5f, 1.5f, 0.0f}, {0.0f, 1.0f, 0.0f}}
+    };
+    indices = { // Right-Hand Triangle
+        0, 1, 2, 2, 3, 0,
+        4, 5, 6, 6, 7, 4,
+        8, 9, 10, 10, 11, 8
+    };
 }

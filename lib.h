@@ -7,7 +7,10 @@
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
+#include <glm/vec4.hpp>
+#include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/hash.hpp>
 
 // #define TINYOBJLOADER_IMPLEMENTATION
@@ -29,6 +32,11 @@
 #include <set>
 #include <array>
 #include <unordered_map>
+#include <string>
+#include <cmath>
+#include <math.h>
+#include <chrono>
+#include <thread>
 
 using namespace std;
 

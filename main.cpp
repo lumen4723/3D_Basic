@@ -4,7 +4,7 @@
 
 int main() {
     try {
-        Window app(1600, 900);
+        Window app(1600, 900, "3D Basic");
         app.initVulkan();
         app.mainLoop();
         app.cleanup();
