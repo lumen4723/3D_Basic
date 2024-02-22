@@ -13,15 +13,15 @@ public:
     const int MAX_FRAMES_IN_FLIGHT = 2;
 
     filesystem::path rootPath = []() {
-        char path[MAX_PATH];
-        GetModuleFileName(NULL, path, MAX_PATH);
+        wchar_t path[MAX_PATH];
+        GetModuleFileNameW(NULL, path, MAX_PATH);
         return filesystem::path(path).parent_path();
     }();
 
     GLFWwindow* window;
     VKengine* engine;
 
-    Window(); // <= void initWindow();
+    Window();
 
     void initVulkan();
 
@@ -29,3 +29,8 @@ public:
 
     void cleanup();
 };
+
+static void framebufferResizeCallback(GLFWwindow* window, int width, int height) {
+    auto app = reinterpret_cast<VKengine*>(glfwGetWindowUserPointer(window));
+    app->framebufferResized = true;
+}

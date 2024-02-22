@@ -31,10 +31,7 @@ private:
     VkSurfaceKHR surface;
 
     VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
-public:
-    VkDevice device;
 
-private:
     VkQueue graphicsQueue;
     VkQueue presentQueue;
 
@@ -72,9 +69,9 @@ private:
     uint32_t currentFrame = 0;
 
 public:
-    bool framebufferResized = false;
+    VkDevice device;
+    bool framebufferResized;
 
-public:
     vector<Vertex> vertices = {
         {{-0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
         {{0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
@@ -114,7 +111,8 @@ public:
     VKengine(
         GLFWwindow* window,
         const int MAX_FRAMES_IN_FLIGHT,
-        filesystem::path& rootPath
+        filesystem::path& rootPath,
+        bool framebufferResized = false
     );
 
     void createBuffer(
@@ -136,32 +134,4 @@ public:
 
     void recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex);
     void updateUniformBuffer(uint32_t currentImage);
-
-    VkShaderModule createShaderModule(const vector<char>& code);
-    VkSurfaceFormatKHR chooseSwapSurfaceFormat(
-        const vector<VkSurfaceFormatKHR>& availableFormats
-    );
-    VkPresentModeKHR chooseSwapPresentMode(
-        const vector<VkPresentModeKHR>& availablePresentModes
-    );
-    VkExtent2D chooseSwapExtent(
-        const VkSurfaceCapabilitiesKHR& capabilities
-    );
-
-    SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
-
-    bool checkDeviceExtensionSupport(VkPhysicalDevice device);
-
-    bool isDeviceSuitable(VkPhysicalDevice device);
-
-    QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
-
-    vector<const char*> getRequiredExtensions();
-
-    bool checkValidationLayerSupport();
 };
-
-static void framebufferResizeCallback(GLFWwindow* window, int width, int height) {
-    auto app = reinterpret_cast<VKengine*>(glfwGetWindowUserPointer(window));
-    app->framebufferResized = true;
-}

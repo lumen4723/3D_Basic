@@ -29,7 +29,7 @@ Window::Window() {
 }
 
 void Window::initVulkan() {
-    engine = new VKengine(window, MAX_FRAMES_IN_FLIGHT, rootPath);
+    engine = new VKengine(window, MAX_FRAMES_IN_FLIGHT, rootPath, true);
 }
 
 void Window::mainLoop() {
