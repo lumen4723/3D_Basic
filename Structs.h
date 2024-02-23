@@ -30,6 +30,12 @@ struct Vertex {
 
         return attributeDescriptions;
     }
+
+    Vertex() {}
+    Vertex(glm::vec3 pos, glm::vec3 color) {
+        this->pos = pos;
+        this->color = color;
+    }
 };
 
 struct QueueFamilyIndices {

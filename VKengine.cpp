@@ -81,10 +81,14 @@ void VKengine::vkCleanup() {
     vkDestroyDescriptorSetLayout(device, descriptorSetLayout, nullptr);
 
     vkDestroyBuffer(device, indexBuffer, nullptr);
-    vkFreeMemory(device, indexBufferMemory, nullptr);
+    if (indexBufferMemory != VK_NULL_HANDLE) {
+        vkFreeMemory(device, indexBufferMemory, nullptr);
+    }
 
     vkDestroyBuffer(device, vertexBuffer, nullptr);
-    vkFreeMemory(device, vertexBufferMemory, nullptr);
+    if (vertexBufferMemory != VK_NULL_HANDLE) {
+        vkFreeMemory(device, vertexBufferMemory, nullptr);
+    }
 
     for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
         vkDestroySemaphore(device, renderFinishedSemaphores[i], nullptr);
@@ -105,12 +109,6 @@ void VKengine::vkCleanup() {
 }
 
 void VKengine::recreateSwapChain() {
-    vkDestroyBuffer(device, indexBuffer, nullptr);
-    vkFreeMemory(device, indexBufferMemory, nullptr);
-
-    vkDestroyBuffer(device, vertexBuffer, nullptr);
-    vkFreeMemory(device, vertexBufferMemory, nullptr);
-
     int width = 0, height = 0;
     glfwGetFramebufferSize(window, &width, &height);
     while (width == 0 || height == 0) {
@@ -125,9 +123,6 @@ void VKengine::recreateSwapChain() {
     createSwapChain();
     createImageViews();
     createFramebuffers();
-
-    createVertexBuffer();
-    createIndexBuffer();
 }
 
 void VKengine::cleanupSwapChain() {
@@ -143,9 +138,20 @@ void VKengine::cleanupSwapChain() {
 }
 
 void VKengine::drawFrame() {
+    if (vkQueueWaitIdle(graphicsQueue) == VK_SUCCESS) {
+        vkFreeMemory(device, indexBufferMemory, nullptr);
+        vkFreeMemory(device, vertexBufferMemory, nullptr);
+    }
+
     vkWaitForFences(
         device, 1, &inFlightFences[currentFrame], VK_TRUE, UINT64_MAX
     );
+
+    vkDestroyBuffer(device, indexBuffer, nullptr);
+    vkDestroyBuffer(device, vertexBuffer, nullptr);
+
+    createVertexBuffer();
+    createIndexBuffer();
 
     uint32_t imageIndex;
     VkResult result = vkAcquireNextImageKHR(
