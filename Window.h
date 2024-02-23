@@ -5,6 +5,9 @@
 #include "VKengine.h"
 #include "VKtools.h"
 
+#include "Chara.h"
+#include "Bullet.h"
+
 class Window {
 public:
     const uint32_t WIDTH;
@@ -29,7 +32,11 @@ public:
 
     void cleanup();
     
-    void makeVertexFrame(vector<Vertex>& vertices, vector<uint16_t>& indices);
+    // 모든 액터, 컴포넌트를 단일 Vertices, Indices 벡터로 변환
+    void makeVertexFrame(
+        vector<Vertex>& vertices, vector<uint16_t>& indices,
+        vector<Chara>& players, vector<Bullet>& bullets
+    );
 };
 
 static void framebufferResizeCallback(GLFWwindow* window, int width, int height) {

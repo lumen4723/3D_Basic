@@ -346,16 +346,15 @@ void VKengine::updateUniformBuffer(uint32_t currentImage) {
         currentTime - startTime
     ).count();
 
-    UniformBufferObject ubo{}; // 카메라 설정
+    UniformBufferObject ubo{}; // 전역 카메라 설정
     ubo.model = glm::rotate(
         glm::mat4(1.0f),
-        // time * glm::radians(45.0f),
         glm::radians(0.0f),
         glm::vec3(0.0f, 0.0f, 1.0f)
     );
     ubo.view = glm::lookAt(
-        glm::vec3(0.0f, -2.0f, 2.0f), // Like 3D
-        // glm::vec3(0.0f, -1.e-20f, 4.0f), // Like 2D
+        // glm::vec3(0.0f, -2.0f, 2.0f), // Like 3D
+        glm::vec3(0.0f, -1.e-20f, 4.0f), // Like 2D
         glm::vec3(0.0f, 0.0f, 0.0f),
         glm::vec3(0.0f, 0.0f, 1.0f)
     );
