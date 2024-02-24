@@ -1,6 +1,6 @@
 #include "Window.h"
 
-#include "lib.h"
+#include "../lib.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
@@ -39,9 +39,6 @@ void Window::mainLoop() {
 
     // 마우스를 지움
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    int width, height; // GLFW 창의 크기를 받음 (즉, 우 하단 좌표가 됨)
-    glfwGetWindowSize(window, &width, &height);
-    glfwSetCursorPos(window, width / 2, height / 2); // 마우스를 중앙으로 옮김
 
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();

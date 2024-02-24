@@ -1,6 +1,6 @@
 #include "VKengine.h"
 
-#include "lib.h"
+#include "../lib.h"
 
 void VKengine::createInstance() {
     if (enableValidationLayers && !checkValidationLayerSupport(validationLayers)) {

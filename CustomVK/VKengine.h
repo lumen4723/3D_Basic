@@ -1,7 +1,7 @@
 #pragma once 
 
-#include "lib.h"
-#include "Camera.h"
+#include "../lib.h"
+#include "../BaseClass/Camera.h"
 #include "VKtools.h"
 
 class VKengine {

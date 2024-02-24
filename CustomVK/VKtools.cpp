@@ -1,6 +1,6 @@
 #include "VKtools.h"
 
-#include "lib.h"
+#include "../lib.h"
 
 VkResult CreateDebugUtilsMessengerEXT(
     VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo,

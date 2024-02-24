@@ -1,10 +1,10 @@
 #pragma once
 
-#include "lib.h"
+#include "../lib.h"
 
 #include "VKengine.h"
 #include "VKtools.h"
-#include "Input.h"
+#include "../BaseClass/Input.h"
 
 class Window {
 public:

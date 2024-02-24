@@ -1,6 +1,6 @@
 #include "Input.h"
 
-#include "lib.h"
+#include "../lib.h"
 
 void processInput(GLFWwindow *window, Camera &camera) {
     // 키보드 입력
@@ -23,25 +23,30 @@ void processInput(GLFWwindow *window, Camera &camera) {
         camera.addMov(0.0f, 0.0f, -camera.getMovSpeed());
     }
 
-    double mposX, mposY; // 마우스좌표를 GLFW 좌표계로 받음 (좌 상단이 0, 0)
-    glfwGetCursorPos(window, &mposX, &mposY);
+    if (glfwGetKey(window, GLFW_KEY_F) == GLFW_RELEASE) {
+        double mposX, mposY; // 마우스좌표를 GLFW 좌표계로 받음 (좌 상단이 0, 0)
+        glfwGetCursorPos(window, &mposX, &mposY);
 
-    int width, height; // GLFW 창의 크기를 받음 (즉, 우 하단 좌표가 됨)
-    glfwGetWindowSize(window, &width, &height);
+        int width, height; // GLFW 창의 크기를 받음 (즉, 우 하단 좌표가 됨)
+        glfwGetWindowSize(window, &width, &height);
 
-    // 윈도우 좌표의 차이 값을 degree로 변환
-    camera.addRot(
-        (width / 2.0 - mposX) * camera.getRotSpeed(),
-        (height / 2.0 - mposY) * camera.getRotSpeed()
-    );
+        // 윈도우 좌표의 차이 값을 degree로 변환
+        camera.addRot(
+            (width / 2.0 - mposX) * camera.getRotSpeed(),
+            (height / 2.0 - mposY) * camera.getRotSpeed()
+        );
 
-    camera.setDir(
-        cos(glm::radians(camera.getRotX())),
-        sin(glm::radians(camera.getRotX())),
-        sin(glm::radians(camera.getRotY()))
-    );
-
-    glfwSetCursorPos(window, width / 2, height / 2); // 마우스를 중앙으로 옮김
+        camera.setDir(
+            cos(glm::radians(camera.getRotX())),
+            sin(glm::radians(camera.getRotX())),
+            sin(glm::radians(camera.getRotY()))
+        );
+        glfwSetCursorPos(window, width / 2.0, height / 2.0); // 마우스를 중앙으로 옮김
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // 마우스 커서를 숨김
+    }
+    else if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS) {
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); // 마우스 커서를 보이게 함
+    }
 
     if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
     }

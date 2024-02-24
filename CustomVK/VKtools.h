@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib.h"
+#include "../lib.h"
 
 static vector<char> readFile(const string& filename) {
     ifstream file(filename, ios::ate | ios::binary);

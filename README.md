@@ -1,6 +1,6 @@
 실행 코드 (릴리즈 빌드), (디버그 빌드는 -mwindows 옵션을 빼면 됨)
 
-g++ -fdiagnostics-color=always -g .\*.cpp FileInfo.res -o .\main.exe -std=c++23 -I.\include -I.\Vulkan\include -L.\lib -L.\Vulkan\lib -mwindows -lglfw3 -lvulkan-1 -lgdi32 && main.exe
+g++ -fdiagnostics-color=always -g .\*.cpp .\BaseClass\*.cpp .\CustomVK\*.cpp FileInfo.res -o .\main.exe -std=c++23 -I.\include -I.\Vulkan\include -L.\lib -L.\Vulkan\lib -mwindows -lglfw3 -lvulkan-1 -lgdi32 && main.exe
 
 조건
 

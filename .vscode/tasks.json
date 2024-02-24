@@ -8,6 +8,8 @@
                 "-fdiagnostics-color=always",
                 "-g",
                 "${fileDirname}\\*.cpp",
+                "${fileDirname}\\BaseClass\\*.cpp",
+                "${fileDirname}\\CustomVK\\*.cpp",
                 "${fileDirname}\\FileInfo.res",
                 "-o",
                 "${fileDirname}\\main.exe",
