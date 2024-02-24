@@ -347,22 +347,10 @@ void VKengine::updateUniformBuffer(uint32_t currentImage) {
     ).count();
 
     UniformBufferObject ubo{}; // 카메라 설정
-    ubo.model = glm::rotate(
-        glm::mat4(1.0f),
-        // time * glm::radians(45.0f),
-        glm::radians(0.0f),
-        glm::vec3(0.0f, 0.0f, 1.0f)
-    );
-    ubo.view = glm::lookAt(
-        glm::vec3(0.0f, -2.0f, 2.0f), // Like 3D
-        // glm::vec3(0.0f, -1.e-20f, 4.0f), // Like 2D
-        glm::vec3(0.0f, 0.0f, 0.0f),
-        glm::vec3(0.0f, 0.0f, 1.0f)
-    );
-    ubo.proj = glm::perspective(
-        glm::radians(90.0f),
-        swapChainExtent.width / (float) swapChainExtent.height,
-        0.1f, 10.0f
+    ubo.model = mainCam.getRotMat();
+    ubo.view = mainCam.getMovMat();
+    ubo.proj = mainCam.getPerspectiveMat(
+        swapChainExtent.width, swapChainExtent.height
     );
     ubo.proj[1][1] *= -1;
 

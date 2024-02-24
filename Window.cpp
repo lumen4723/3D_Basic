@@ -37,11 +37,17 @@ void Window::initVulkan() {
 void Window::mainLoop() {
     // TODO: Init Actors And Resources
 
+    // 마우스를 지움
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    int width, height; // GLFW 창의 크기를 받음 (즉, 우 하단 좌표가 됨)
+    glfwGetWindowSize(window, &width, &height);
+    glfwSetCursorPos(window, width / 2, height / 2); // 마우스를 중앙으로 옮김
+
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
 
         // TODO: Update Actors And Resources
-        
+        processInput(window, engine->mainCam);
 
         // TODO: Make Vertex Frame Buffer And Indices From Actors And Resources
         makeVertexFrame(engine->vertices, engine->indices);
@@ -63,24 +69,12 @@ void Window::makeVertexFrame(
     vector<Vertex>& vertices, vector<uint16_t>& indices
 ) {
     vertices = {
-        {{-0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
-        {{0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
-        {{0.5f, 0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}},
-        {{-0.5f, 0.5f, 0.0f}, {1.0f, 1.0f, 1.0f}},
-
-        {{0.5f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
-        {{1.5f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
-        {{1.5f, 1.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
-        {{0.5f, 1.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
-
-        {{-1.5f, 0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
-        {{-0.5f, 0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
-        {{-0.5f, 1.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
-        {{-1.5f, 1.5f, 0.0f}, {0.0f, 1.0f, 0.0f}}
+        {{-100.0f, -100.0f, 0.0f}, {1.0f, 0.0f, 0.0f}}, // 좌하단 빨강
+        {{100.0f, -100.0f, 0.0f}, {0.0f, 1.0f, 0.0f}}, // 우하단 초록
+        {{100.0f, 100.0f, 0.0f}, {0.0f, 0.0f, 1.0f}}, // 우상단 파랑
+        {{-100.0f, 100.0f, 0.0f}, {1.0f, 1.0f, 1.0f}}, // 좌상단 흰색
     };
     indices = { // Right-Hand Triangle
         0, 1, 2, 2, 3, 0,
-        4, 5, 6, 6, 7, 4,
-        8, 9, 10, 10, 11, 8
     };
 }

@@ -4,6 +4,7 @@
 
 #include "VKengine.h"
 #include "VKtools.h"
+#include "Input.h"
 
 class Window {
 public:

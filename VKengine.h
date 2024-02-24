@@ -1,7 +1,7 @@
 #pragma once 
 
 #include "lib.h"
-
+#include "Camera.h"
 #include "VKtools.h"
 
 class VKengine {
@@ -71,6 +71,8 @@ private:
 public:
     VkDevice device;
     bool framebufferResized = true;
+
+    Camera mainCam = Camera(0.0f, 0.0f, 2.0f, 1.0f, 1.e-20f, 1.e-20f);
 
     vector<Vertex> vertices = { // 위치, 색깔 초기 값
         {{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}}
