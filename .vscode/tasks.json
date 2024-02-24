@@ -8,6 +8,7 @@
                 "-fdiagnostics-color=always",
                 "-g",
                 "${fileDirname}\\*.cpp",
+                "${fileDirname}\\FileInfo.res",
                 "-o",
                 "${fileDirname}\\main.exe",
                 "-std=c++23",
