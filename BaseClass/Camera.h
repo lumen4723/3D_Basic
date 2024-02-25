@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../lib.h"
+#include "Rigidbody.h"
+#include "Collider.h"
 
 class Camera {
 private:
@@ -21,9 +23,12 @@ private:
     float rotSpeed = 0.1f;
     float movSpeed = 0.05f;
 
-    float fov = 90.0f;
+    float fov = 45.0f;
     float minDist = 0.1f;
-    float maxDist = 100.0f;
+    float maxDist = 1000.0f;
+
+    Collider *collider = nullptr;
+    Rigidbody *rigidbody = nullptr;
 
 public:
     Camera(
@@ -68,4 +73,10 @@ public:
     glm::highp_mat4 getRotMat();
     glm::highp_mat4 getMovMat();
     glm::highp_mat4 getPerspectiveMat(uint32_t width, uint32_t height);
+
+    void setCollider(Collider *collider);
+    void setRigidbody(Rigidbody *rigidbody);
+
+    Collider *getCollider();
+    Rigidbody *getRigidbody();
 };

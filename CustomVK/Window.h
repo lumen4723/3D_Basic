@@ -30,7 +30,10 @@ public:
 
     void cleanup();
     
-    void makeVertexFrame(vector<Vertex>& vertices, vector<uint16_t>& indices);
+    void makeVertexFrame(
+        vector<Vertex>& vertices, vector<uint16_t>& indices,
+        vector<Chara>& charas
+    );
 };
 
 static void framebufferResizeCallback(GLFWwindow* window, int width, int height) {

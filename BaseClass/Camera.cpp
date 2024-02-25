@@ -117,3 +117,19 @@ glm::highp_mat4 Camera::getPerspectiveMat(uint32_t width, uint32_t height) {
         minDist, maxDist
     );
 }
+
+void Camera::setCollider(Collider *collider) {
+    this->collider = collider;
+}
+
+void Camera::setRigidbody(Rigidbody *rigidbody) {
+    this->rigidbody = rigidbody;
+}
+
+Collider *Camera::getCollider() {
+    return collider;
+}
+
+Rigidbody *Camera::getRigidbody() {
+    return rigidbody;
+}

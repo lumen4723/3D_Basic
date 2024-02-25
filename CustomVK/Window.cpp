@@ -1,9 +1,22 @@
 #include "Window.h"
 
 #include "../lib.h"
+#include "../BaseClass/Collider.h"
+#include "../BaseClass/Rigidbody.h"
+#include "../BaseClass/Chara.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
+
+void InitComp(
+    vector<Collider>& colliders, vector<Rigidbody>& rigidbodies, vector<Chara>& charas
+);
+
+void UpdateComp(
+    vector<Collider>& colliders, vector<Rigidbody>& rigidbodies,
+    vector<Chara>& charas, Camera& mainCam,
+    vector<Vertex>& vertices, vector<uint16_t>& indices
+);
 
 Window::Window(
     uint32_t width, uint32_t height, string title
@@ -35,10 +48,17 @@ void Window::initVulkan() {
 }
 
 void Window::mainLoop() {
-    // TODO: Init Actors And Resources
-
     // 마우스를 지움
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    // TODO: Init Actors And Resources
+    vector<Collider> colliders;
+    vector<Rigidbody> rigidbodies;
+
+    vector<Chara> charas;
+
+    InitComp(
+        colliders, rigidbodies, charas
+    );
 
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
@@ -46,8 +66,17 @@ void Window::mainLoop() {
         // TODO: Update Actors And Resources
         processInput(window, engine->mainCam);
 
+        UpdateComp(
+            colliders, rigidbodies,
+            charas, engine->mainCam,
+            engine->vertices, engine->indices
+        );
+
         // TODO: Make Vertex Frame Buffer And Indices From Actors And Resources
-        makeVertexFrame(engine->vertices, engine->indices);
+        makeVertexFrame(
+            engine->vertices, engine->indices,
+            charas
+        );
         
         engine->drawFrame();
     }
@@ -63,7 +92,8 @@ void Window::cleanup() {
 }
 
 void Window::makeVertexFrame(
-    vector<Vertex>& vertices, vector<uint16_t>& indices
+    vector<Vertex>& vertices, vector<uint16_t>& indices,
+    vector<Chara>& charas
 ) {
     vertices = {
         {{-100.0f, -100.0f, 0.0f}, {1.0f, 0.0f, 0.0f}}, // 좌하단 빨강
@@ -74,4 +104,16 @@ void Window::makeVertexFrame(
     indices = { // Right-Hand Triangle
         0, 1, 2, 2, 3, 0,
     };
+}
+
+void InitComp(
+    vector<Collider>& colliders, vector<Rigidbody>& rigidbodies, vector<Chara>& charas
+) {
+}
+
+void UpdateComp(
+    vector<Collider>& colliders, vector<Rigidbody>& rigidbodies,
+    vector<Chara>& charas, Camera& mainCam,
+    vector<Vertex>& vertices, vector<uint16_t>& indices
+) {
 }
